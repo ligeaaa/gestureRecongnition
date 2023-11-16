@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torch.nn import Conv2d, MaxPool2d, Flatten, Linear, Sequential
 
-class Pan(nn.Module):
+class Cnn(nn.Module):
     def __init__(self):
         super().__init__()
         self.model1 = Sequential(
@@ -14,7 +14,7 @@ class Pan(nn.Module):
             MaxPool2d(2),
             Flatten(),
             Linear(1024, 64),
-            Linear(64, 10)
+            Linear(64, 6)
         )
 
     def forward(self,x):
@@ -22,7 +22,7 @@ class Pan(nn.Module):
         return x
 
 if __name__ == '__main__':
-    pan = Pan()
+    pan = Cnn()
     input = torch.ones(64, 3, 32, 32)
     output = pan(input)
     print(output.shape)

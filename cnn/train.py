@@ -15,8 +15,8 @@ print("训练数据集长度为：{}".format(train_data_size))
 print("测试数据集长度为：{}".format(test_data_size))
 
 # 创建网络模型
-pan = cnnModel.Pan()
-pan = pan.cuda()
+cnn = cnnModel.Cnn()
+cnn = cnn.cuda()
 
 # 损失函数
 loss_fn = nn.CrossEntropyLoss()
@@ -24,7 +24,7 @@ loss_fn = loss_fn.cuda()
 
 # 优化器
 learning_rate = 1e-2
-optimizer = torch.optim.SGD(pan.parameters(), lr=learning_rate)
+optimizer = torch.optim.SGD(cnn.parameters(), lr=learning_rate)
 
 # 设置训练网络的一些参数
 # 设置训练的次数
@@ -32,7 +32,7 @@ total_train_step = 0
 # 记录测试的次数
 total_test_step = 0
 # 训练的轮数
-epoch = 100
+epoch = 10001
 
 # 添加tensorboard
 writer = SummaryWriter("../logs_train")
@@ -41,12 +41,12 @@ writer = SummaryWriter("../logs_train")
 for i in range(epoch):
     print("----------第 {} 轮训练开始----------".format(i+1))
     # 训练步骤开始
-    pan.train()  # 注意，这一步表示开启模型的训练模式，但是只有某些特定的层需要开启（详情查看官网），在本代码中仅仅是为了规范写上这行代码
+    cnn.train()  # 注意，这一步表示开启模型的训练模式，但是只有某些特定的层需要开启（详情查看官网），在本代码中仅仅是为了规范写上这行代码
     for step, data in enumerate(train_dataloader):
         imgs, targets = data
         imgs = imgs.cuda()
         targets = targets.cuda()
-        outputs = pan(imgs)
+        outputs = cnn(imgs)
         loss = loss_fn(outputs, targets)
 
         # 优化器优化模型
@@ -60,7 +60,7 @@ for i in range(epoch):
             writer.add_scalar("train_loss", loss.item(), total_train_step)
 
     # 测试步骤开始
-    pan.eval()  # 注意，这一步表示开启模型的测试模式，但是只有某些特定的层需要开启（详情查看官网），在本代码中仅仅是为了规范写上这行代码
+    cnn.eval()  # 注意，这一步表示开启模型的测试模式，但是只有某些特定的层需要开启（详情查看官网），在本代码中仅仅是为了规范写上这行代码
     total_test_loss = 0
     total_accuracy = 0
     with torch.no_grad():
@@ -68,7 +68,7 @@ for i in range(epoch):
             imgs, targets = data
             imgs = imgs.cuda()
             targets = targets.cuda()
-            outputs = pan(imgs)
+            outputs = cnn(imgs)
             loss = loss_fn(outputs, targets)
             total_test_loss = total_test_loss + loss
             accuracy = (outputs.argmax(1) == targets).sum()
@@ -81,7 +81,8 @@ for i in range(epoch):
     total_test_step = total_test_step + 1
 
     # 保存每一轮的网络模型
-    torch.save(pan, "pan_{}.pth".format(i))
-    print("模型已保存")
+    if i % 100 == 0:
+        torch.save(cnn, "cnn_{}.pth".format(i))
+        print("第{}轮模型已保存".format(i))
 
 writer.close()
