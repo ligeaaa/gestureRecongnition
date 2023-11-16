@@ -27,14 +27,14 @@ while True:
         # 调用GPU
         image = image.to(device)
         # 调用已加载好的模型
-        pan = torch.load("cnn_400.pth")
+        cnn = torch.load("cnn_0.pth")
         # 调用GPU
-        pan = pan.to(device)
+        cnn = cnn.to(device)
 
         image = torch.reshape(image, (1, 3, 32, 32))
-        pan.eval()
+        cnn.eval()
         with torch.no_grad():
-            output = pan(image)
+            output = cnn(image)
         print(output)
         answer = output.argmax(1)
 
