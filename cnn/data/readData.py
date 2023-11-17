@@ -5,9 +5,11 @@ import torch
 from torchvision import transforms
 
 from cnn.data.my_dataset import MyDataSet
-from cnn.data.utils import read_split_data
+from cnn.data.utils import read_split_data, plot_data_loader_image
 
-root = "C:/Users/离歌/Desktop/shp_marcel_train/Marcel-Train"  # 数据集所在根目录
+# root = "C:/Users/离歌/Desktop/shp_marcel_train/Marcel-Train"  # 数据集所在根目录
+root = "C:/Users/离歌/Desktop/Indian Sign Language Dataset_data_datasets"  # 数据集所在根目录
+
 
 
 

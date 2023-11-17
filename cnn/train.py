@@ -9,8 +9,8 @@ from cnn.data import readData
 # 准备数据集
 
 train_dataloader, test_dataloader = readData.getDataLader()
-train_data_size = len(train_dataloader)
-test_data_size = len(test_dataloader)
+train_data_size = len(train_dataloader) * 64
+test_data_size = len(test_dataloader) * 64
 print("训练数据集长度为：{}".format(train_data_size))
 print("测试数据集长度为：{}".format(test_data_size))
 
@@ -44,6 +44,7 @@ for i in range(epoch):
     cnn.train()  # 注意，这一步表示开启模型的训练模式，但是只有某些特定的层需要开启（详情查看官网），在本代码中仅仅是为了规范写上这行代码
     for step, data in enumerate(train_dataloader):
         imgs, targets = data
+        # print(type(imgs))
         imgs = imgs.cuda()
         targets = targets.cuda()
         outputs = cnn(imgs)
@@ -81,7 +82,7 @@ for i in range(epoch):
     total_test_step = total_test_step + 1
 
     # 保存每一轮的网络模型
-    if i % 100 == 0:
+    if i % 1 == 0:
         torch.save(cnn, "cnn_{}.pth".format(i))
         print("第{}轮模型已保存".format(i))
 
