@@ -49,8 +49,8 @@ while True:
             width = int((ymax - ymin) * img.shape[0])
 
             # 裁剪矩形区域
-            hand_img = img[max(top_left_y,0) : min(top_left_y + width,img.shape[0]),
-                       max(top_left_x,0) : min(top_left_x + length,img.shape[1])]
+            hand_img = img[max(top_left_y-15,0) : min(top_left_y + width + 30,img.shape[0]),
+                       max(top_left_x-15,0) : min(top_left_x + length + 30,img.shape[1])]
 
             # 将宽度 resize 成 128
             if hand_img is not None:
