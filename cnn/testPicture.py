@@ -3,7 +3,7 @@ from PIL import Image
 from cnnModel import *
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-image_path = "D:/code&project/gestureRecongnition/data/0.jpg"
+image_path = "/data/0.jpg"
 image = Image.open(image_path)
 image = image.convert('RGB')
 

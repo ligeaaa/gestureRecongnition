@@ -14,7 +14,7 @@ class Cnn(nn.Module):
             MaxPool2d(2),
             Flatten(),
             Linear(1024, 64),
-            Linear(64, 35)
+            Linear(64, 5)
         )
 
     def forward(self,x):

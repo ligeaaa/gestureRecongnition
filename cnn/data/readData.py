@@ -2,16 +2,21 @@ import os
 from multiprocessing import freeze_support
 
 import torch
+from torch.utils.data import DataLoader
 from torchvision import transforms
 
 from cnn.data.my_dataset import MyDataSet
 from cnn.data.utils import read_split_data, plot_data_loader_image
 
+from torchvision.datasets import ImageFolder
+from torchvision.transforms.functional import to_tensor
+
+
+
 # root = "C:/Users/离歌/Desktop/shp_marcel_train/Marcel-Train"  # 数据集所在根目录
-root = "C:/Users/离歌/Desktop/Indian Sign Language Dataset_data_datasets"  # 数据集所在根目录
-
-
-
+# root = "C:/Users/离歌/Desktop/Indian Sign Language Dataset_data_datasets"  # 数据集所在根目录
+# root = "D:/桌面/shp_marcel_train/Marcel-Train"  # 数据集所在根目录
+root = "C:/Users/离歌/Desktop/Data/train"  # 数据集所在根目录
 
 def getDataLader():
     # 调用GPU
@@ -21,14 +26,17 @@ def getDataLader():
     train_images_path, train_images_label, val_images_path, val_images_label = read_split_data(root)
 
     data_transform = {
-        "train": transforms.Compose([transforms.RandomResizedCrop(32),
+        "train": transforms.Compose([
+                                     # transforms.Resize((32,32)),
+                                     transforms.RandomResizedCrop((32, 32)),
                                      transforms.RandomHorizontalFlip(),
                                      transforms.ToTensor(),
-                                     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]),
-        "val": transforms.Compose([transforms.Resize(32),
+                                     transforms.Normalize([0.29055837, 0.2479621, 0.24285364], [0.28176972, 0.2415727, 0.20479323])]),
+        "val": transforms.Compose([transforms.Resize((32, 32)),
                                    transforms.CenterCrop(32),
                                    transforms.ToTensor(),
-                                   transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])}
+                                   transforms.Normalize([0.29055837, 0.2479621, 0.24285364], [0.28176972, 0.2415727, 0.20479323])])
+    }
 
     train_data_set = MyDataSet(images_path=train_images_path,
                                images_class=train_images_label,
