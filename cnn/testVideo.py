@@ -27,7 +27,7 @@ while True:
         # 调用GPU
         image = image.to(device)
         # 调用已加载好的模型
-        cnn = torch.load("cnn_3.pth")
+        cnn = torch.load("cnn_81.pth")
         # 调用GPU
         cnn = cnn.to(device)
 

@@ -23,7 +23,7 @@ loss_fn = nn.CrossEntropyLoss()
 loss_fn = loss_fn.cuda()
 
 # 优化器
-learning_rate = 1e-2
+learning_rate = 1e-3
 optimizer = torch.optim.SGD(cnn.parameters(), lr=learning_rate)
 
 # 设置训练网络的一些参数
