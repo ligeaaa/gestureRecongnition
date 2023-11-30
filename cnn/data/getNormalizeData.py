@@ -6,12 +6,12 @@ from PIL import Image
 from cnn.data.utils import read_split_data
 
 # img_h, img_w = 32, 32
-img_h, img_w = 128, 128   #根据自己数据集适当调整，影响不大
+img_h, img_w = 32, 32   #根据自己数据集适当调整，影响不大
 means, stdevs = [], []
 img_list = []
 
 # 图片保存地址
-imgs_path = 'C:/Users/离歌/Desktop/Data/train'
+imgs_path = "C:/Users/离歌/Desktop/Data/train"  # 数据集所在根目录
 
 train_images_path, train_images_label, val_images_path, val_images_label = read_split_data(imgs_path)
 

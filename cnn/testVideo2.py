@@ -61,30 +61,30 @@ while True:
             if hand_img is not None:
                 # 等比例缩放
                 max_dim = 32
-                if length > width:
-                    new_length = max_dim
-                    new_width = int(max_dim * (width / length))
-                else:
-                    new_width = max_dim
-                    new_length = int(max_dim * (length / width))
+                # if length > width:
+                #     new_length = max_dim
+                #     new_width = int(max_dim * (width / length))
+                # else:
+                #     new_width = max_dim
+                #     new_length = int(max_dim * (length / width))
 
 
-                hand_img_resized = cv2.resize(hand_img, (max(1, new_length), max(1, new_width)),
+                hand_img_resized = cv2.resize(hand_img, (max(1, max_dim), max(1, max_dim)),
                                                 interpolation=cv2.INTER_AREA)
 
 
-                # 创建一个128x128的黑色背景
-                background = np.zeros((max_dim, max_dim, 3), dtype=np.uint8)
-
-                # 计算将调整后的图像放置在背景中的位置
-                y_offset = (max_dim - new_width) // 2
-                x_offset = (max_dim - new_length) // 2
-
-                # 将调整后的图像放置在背景中
-                background[y_offset:y_offset + new_width, x_offset:x_offset + new_length] = hand_img_resized
+                # # 创建一个128x128的黑色背景
+                # background = np.zeros((max_dim, max_dim, 3), dtype=np.uint8)
+                #
+                # # 计算将调整后的图像放置在背景中的位置
+                # y_offset = (max_dim - new_width) // 2
+                # x_offset = (max_dim - new_length) // 2
+                #
+                # # 将调整后的图像放置在背景中
+                # background[y_offset:y_offset + new_width, x_offset:x_offset + new_length] = hand_img_resized
 
                 # 将numpy类型转化为Image类型
-                image = Image.fromarray(background)
+                image = Image.fromarray(hand_img_resized)
                 # 转化其为模型的输入类型
                 image = image.convert('RGB')
                 transform = torchvision.transforms.Compose([torchvision.transforms.Resize((32, 32)),
@@ -94,7 +94,7 @@ while True:
                 # 调用GPU
                 image = image.to(device)
                 # 调用已加载好的模型
-                cnn = torch.load("cnn_81.pth")
+                cnn = torch.load("cnn_132.pth")
                 # 调用GPU
                 cnn = cnn.to(device)
 
@@ -123,15 +123,6 @@ while True:
 
             # 在图像上绘制手部关键点和连接线
             mpDraw.draw_landmarks(draw_img, handLms, mpHands.HAND_CONNECTIONS)
-
-
-
-
-
-
-
-
-
 
 
     cTime = time.time()

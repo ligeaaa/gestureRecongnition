@@ -27,15 +27,15 @@ def getDataLader():
 
     data_transform = {
         "train": transforms.Compose([
-                                     # transforms.Resize((32,32)),
-                                     transforms.RandomResizedCrop((32, 32)),
-                                     transforms.RandomHorizontalFlip(),
+                                     transforms.Resize((32,32)),
+                                     # transforms.RandomResizedCrop((32, 32)),
+                                     # transforms.RandomHorizontalFlip(),
                                      transforms.ToTensor(),
-                                     transforms.Normalize([0.29055837, 0.2479621, 0.24285364], [0.28176972, 0.2415727, 0.20479323])]),
+                                     transforms.Normalize([0.6234473, 0.5284743, 0.49233654], [0.21857326, 0.21912159, 0.2197494])]),
         "val": transforms.Compose([transforms.Resize((32, 32)),
                                    transforms.CenterCrop(32),
                                    transforms.ToTensor(),
-                                   transforms.Normalize([0.29055837, 0.2479621, 0.24285364], [0.28176972, 0.2415727, 0.20479323])])
+                                   transforms.Normalize([0.6234473, 0.5284743, 0.49233654], [0.21857326, 0.21912159, 0.2197494])])
     }
 
     train_data_set = MyDataSet(images_path=train_images_path,
